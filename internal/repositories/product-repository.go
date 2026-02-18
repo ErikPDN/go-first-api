@@ -26,9 +26,7 @@ func (r *ProductRepository) Save(ctx context.Context, product *models.Product) e
 
 	return r.db.QueryRowContext(
 		ctx,
-		query,
-		product.Name,
-		product.Price,
+		query, product.Name, product.Price,
 		product.CreatedAt,
 		product.UpdatedAt,
 	).Scan(&product.ID)

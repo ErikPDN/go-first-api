@@ -42,10 +42,10 @@ func NewPostgresConnection(config PostgresConfig) (*sql.DB, error) {
 func DefaultPostgresConfig() PostgresConfig {
 	return PostgresConfig{
 		Host:     "localhost",
-		Port:     "5432",
+		Port:     "5433",
 		User:     "postgres",
 		Password: "1234",
-		DBName:   "postgres",
+		DBName:   "go_api",
 		SSLMode:  "disable",
 	}
 }
