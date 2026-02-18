@@ -33,4 +33,30 @@ func ProductRoutes(router *gin.Engine) {
 	productRoute.GET("/", func(ctx *gin.Context) {
 		controllers.ListProductsController(ctx, repo)
 	})
+
+	productRoute.PUT("/:id", func(ctx *gin.Context) {
+		id, err := strconv.ParseUint(ctx.Param("id"), 10, 64)
+		if err != nil {
+			ctx.AbortWithStatusJSON(400, gin.H{
+				"success": false,
+				"error":   "invalid id",
+			})
+			return
+		}
+
+		controllers.UpdateProductController(ctx, uint(id), repo)
+	})
+
+	productRoute.DELETE("/:id", func(ctx *gin.Context) {
+		id, err := strconv.ParseUint(ctx.Param("id"), 10, 64)
+		if err != nil {
+			ctx.AbortWithStatusJSON(400, gin.H{
+				"success": false,
+				"error":   "invalid id",
+			})
+			return
+		}
+
+		controllers.DeleteProductController(ctx, uint(id), repo)
+	})
 }

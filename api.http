@@ -15,3 +15,15 @@ GET http://localhost:8080/products/2
 
 ###
 GET http://localhost:8080/products
+
+###
+PUT http://localhost:8080/products/2
+Content-Type: application/json
+
+{
+  "name": "Notebook Gamer",
+  "price": 5999.99
+}
+
+###
+DELETE http://localhost:8080/products/4

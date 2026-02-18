@@ -97,3 +97,52 @@ func (r *ProductRepository) ListByID(ctx context.Context, id uint) (*models.Prod
 
 	return &product, nil
 }
+
+func (r *ProductRepository) UpdateByID(ctx context.Context, id uint, product *models.Product) error {
+	query := `
+		UPDATE product
+		SET name = $1,
+		    price = $2,
+		    updated_at = CURRENT_TIMESTAMP
+		WHERE id = $3
+	`
+
+	result, err := r.db.ExecContext(ctx, query, product.Name, product.Price, id)
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return ErrProductNotFound
+	}
+
+	return nil
+}
+
+func (r *ProductRepository) DeleteByID(ctx context.Context, id uint) error {
+	query := `
+		DELETE FROM product
+		WHERE id = $1
+	`
+
+	result, err := r.db.ExecContext(ctx, query, id)
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return ErrProductNotFound
+	}
+
+	return nil
+}
